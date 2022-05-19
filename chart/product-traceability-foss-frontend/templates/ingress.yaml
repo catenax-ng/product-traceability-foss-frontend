@@ -1,9 +1,10 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "helm.fullname" . }}
+  name: {{ include "product-traceability-foss-frontend.fullname" . }}
   labels:
-      {{- include "helm.labels" . | nindent 4 }}
+      {{- include "product-traceability-foss-frontend.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -13,7 +14,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: {{ include "helm.fullname" . }}-tls
+      secretName: {{ include "product-traceability-foss-frontend.fullname" . }}-tls
   rules:
     - host: {{ .Values.ingress.host }}
       http:
@@ -22,6 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "helm.fullname" . }}
+                name: {{ include "product-traceability-foss-frontend.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
+{{- end }}
