@@ -21,10 +21,13 @@
               "keycloak-js",
               "file-saver",
               "chart.js",
-              "@mapbox/mapbox-gl-geocoder",
               "probe.gl/env",
               "@babel/runtime/regenerator",
-              "hammerjs"
+              "hammerjs",
+              "@mswjs/cookies",
+              "@mswjs/interceptors",
+              "@mswjs/interceptors/lib/interceptors/XMLHttpRequest",
+              "@mswjs/interceptors/lib/interceptors/fetch"
             ],
             "customWebpackConfig": {
               "path": "./webpack.config.js",
@@ -36,7 +39,13 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/manifest.json", "src/assets/fonts", "src/assets/images", "src/mockServiceWorker.js", "src/favicon"],
+            "assets": [
+              "src/manifest.json",
+              "src/assets/fonts",
+              "src/assets/images",
+              "src/mockServiceWorker.js",
+              "src/favicon"
+            ],
             "styles": ["src/styles.scss"],
             "scripts": []
           },
@@ -111,7 +120,13 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "scripts": [],
-            "assets": ["src/manifest.json", "src/assets/fonts", "src/assets/images", "src/mockServiceWorker.js", "src/favicon"],
+            "assets": [
+              "src/manifest.json",
+              "src/assets/fonts",
+              "src/assets/images",
+              "src/mockServiceWorker.js",
+              "src/favicon"
+            ],
             "styles": ["src/styles.scss"],
             "customWebpackConfig": {
               "path": "./webpack.config.js",
