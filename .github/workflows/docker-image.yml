@@ -27,4 +27,4 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest
+        tags: product-traceability-foss/${{ github.repository }}:latest
