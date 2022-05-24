@@ -27,7 +27,7 @@ COPY ./ .
 RUN npm run ng build -- --configuration=${PROFILE} --output-path=dist
 
 # STAGE 2: Serve
-FROM nginx:1.21.6-alpine
+FROM nginxinc/nginx-unprivileged:alpine
 # Remove NGINX default configuration
 RUN rm /etc/nginx/conf.d/default.conf
 # Create directory for SSL certificates
