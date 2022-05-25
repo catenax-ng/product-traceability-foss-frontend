@@ -26,13 +26,17 @@ COPY ./ .
 ## Build the angular app in production mode and store the artifacts in dist folder
 RUN npm run ng build -- --configuration=${PROFILE} --output-path=dist
 
+# Create future /tmp
+RUN mkdir -m 777 /scratchtmp
+
 # STAGE 2: Serve
 FROM nginxinc/nginx-unprivileged:alpine
 # Remove NGINX default configuration
 RUN rm /etc/nginx/conf.d/default.conf
 # Ensure that /tmp exists and user has access to it
-RUN mkdir -m 777 /scratchtmp
-COPY /scratchtmp /tmp
+
+COPY --from=builder /scratchtmp /tmp
+
 # Create directory for SSL certificates
 # Copy project files
 # From ‘builder’ stage copy over the artifacts in dist folder to default nginx public folder
