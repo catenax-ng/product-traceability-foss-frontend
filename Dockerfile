@@ -31,7 +31,8 @@ FROM nginxinc/nginx-unprivileged:alpine
 # Remove NGINX default configuration
 RUN rm /etc/nginx/conf.d/default.conf
 # Ensure that /tmp exists and user has access to it
-RUN chmod 1777 /tmp
+RUN mkdir -m 777 /scratchtmp
+COPY /scratchtmp /tmp
 # Create directory for SSL certificates
 # Copy project files
 # From ‘builder’ stage copy over the artifacts in dist folder to default nginx public folder
