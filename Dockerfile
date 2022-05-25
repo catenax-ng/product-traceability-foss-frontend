@@ -30,9 +30,6 @@ RUN npm run ng build -- --configuration=${PROFILE} --output-path=dist
 FROM nginxinc/nginx-unprivileged:alpine
 # Remove NGINX default configuration
 RUN rm /etc/nginx/conf.d/default.conf
-# Ensure that /tmp exists and user has access to it
-
-VOLUME ["/tmp"]
 
 # Create directory for SSL certificates
 # Copy project files
