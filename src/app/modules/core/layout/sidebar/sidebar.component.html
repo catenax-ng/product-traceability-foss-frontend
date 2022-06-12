@@ -14,7 +14,7 @@ software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
-under the License.    
+under the License.
 -->
 
 <aside [style.width.px]="sidebarWidth" class="sidebar">
@@ -30,10 +30,19 @@ under the License.
         <li>
           <app-sidebar-section
             (click)="this.navigate('dashboard')"
-            [name]="'dashboard'"
+            [name]="'routing.dashboard' | i18n"
             [isActive]="this.activeMenu === 'dashboard'"
             [isExpanded]="this.expanded"
-            [iconName]="'layout-masonry-line'"
+            [iconName]="'dashboard'"
+          ></app-sidebar-section>
+        </li>
+        <li>
+          <app-sidebar-section
+            (click)="this.navigate('parts')"
+            [name]="'routing.parts' | i18n"
+            [isActive]="this.activeMenu === 'parts'"
+            [isExpanded]="this.expanded"
+            [iconName]="'build'"
           ></app-sidebar-section>
         </li>
       </ul>
@@ -49,11 +58,21 @@ under the License.
       <ul class="sidebar-menu-container">
         <li>
           <app-sidebar-section
+            *appHasRole="['admin']"
+            [name]="'routing.admin' | i18n"
+            [isActive]="this.activeMenu === 'admin'"
+            [isExpanded]="this.expanded"
+            [iconName]="'apps'"
+            (click)="this.navigate('admin')"
+          ></app-sidebar-section>
+        </li>
+        <li>
+          <app-sidebar-section
             (click)="this.navigate('about')"
-            [name]="'about'"
+            [name]="'routing.about' | i18n"
             [isActive]="this.activeMenu === 'about'"
             [isExpanded]="this.expanded"
-            [iconName]="'information-line'"
+            [iconName]="'info'"
           ></app-sidebar-section>
         </li>
       </ul>

@@ -1,0 +1,11 @@
+{
+  "pageDashboard": {
+    "title": "Dashboard",
+    "totalOfParts": {
+      "label": "Anzahl Produkte"
+    },
+    "managedTotalOfParts": {
+      "label": "Anzahl Produkte in einer Branche"
+    }
+  }
+}

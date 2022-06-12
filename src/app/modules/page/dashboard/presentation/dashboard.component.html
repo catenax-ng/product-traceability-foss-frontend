@@ -14,10 +14,10 @@ software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
-under the License.    
+under the License.
 -->
 
-<app-header title="{{ this.title }}"></app-header>
+<app-header title="{{ 'pageDashboard.title' | i18n }}"></app-header>
 <div class="dashboard-grid">
   <section class="parts-section">
     <ng-container
@@ -31,15 +31,63 @@ under the License.
     </ng-container>
 
     <ng-template #numberOfPartsMainTmp let-numberOfParts="view">
-      <app-card [id]="1" [label]="'Total of parts'" [icon]="'ic-car-v-2'" [stats]="numberOfParts?.data"></app-card>
+      <app-card-icon
+        [label]="'pageDashboard.totalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="numberOfParts?.data"
+      ></app-card-icon>
     </ng-template>
 
     <ng-template #numberOfPartsErrorTmp let-numberOfParts="view">
-      <app-card [id]="1" [label]="'Total of parts'" [icon]="'ic-car-v-2'" [stats]="0"></app-card>
+      <app-card-icon
+        [label]="'pageDashboard.totalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="0"
+      ></app-card-icon>
     </ng-template>
 
     <ng-template #numberOfPartsLoaderTmp let-numberOfParts="view">
-      <app-card [id]="1" [label]="'Total of parts'" [icon]="'ic-car-v-2'" [stats]="''"></app-card>
+      <app-card-icon
+        [label]="'pageDashboard.totalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="''"
+      ></app-card-icon>
+    </ng-template>
+  </section>
+
+  <section class="parts-section" *appHasRole="['admin', 'supervisor']">
+    <ng-container
+      *viewContainer="
+        this.numberOfParts$ | async;
+        main: managedNumberOfPartsMainTmp;
+        error: managedNumberOfPartsErrorTmp;
+        loading: managedNumberOfPartsLoaderTmp
+      "
+    >
+    </ng-container>
+
+    <ng-template #managedNumberOfPartsMainTmp let-numberOfParts="view">
+      <app-card-icon
+        [label]="'pageDashboard.managedTotalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="numberOfParts?.data"
+      ></app-card-icon>
+    </ng-template>
+
+    <ng-template #managedNumberOfPartsErrorTmp let-numberOfParts="view">
+      <app-card-icon
+        [label]="'pageDashboard.managedTotalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="0"
+      ></app-card-icon>
+    </ng-template>
+
+    <ng-template #managedNumberOfPartsLoaderTmp let-numberOfParts="view">
+      <app-card-icon
+        [label]="'pageDashboard.managedTotalOfParts.label' | i18n"
+        [icon]="'directions_car'"
+        [stats]="''"
+      ></app-card-icon>
     </ng-template>
   </section>
 </div>

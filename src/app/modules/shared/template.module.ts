@@ -53,7 +53,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   declarations: [],
@@ -72,12 +71,10 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     MatSlideToggleModule,
     MatTreeModule,
     MatDividerModule,
     MatProgressBarModule,
-    MatDialogModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatBadgeModule,
@@ -93,8 +90,6 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatSortModule,
     MatRadioModule,
     MatChipsModule,
-    MatTooltipModule,
-    ClipboardModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     MatTooltipModule,
@@ -114,12 +109,10 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     MatSlideToggleModule,
     MatTreeModule,
     MatDividerModule,
     MatProgressBarModule,
-    MatDialogModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatBadgeModule,
@@ -135,8 +128,6 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatSortModule,
     MatRadioModule,
     MatChipsModule,
-    MatTooltipModule,
-    ClipboardModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     MatTooltipModule,

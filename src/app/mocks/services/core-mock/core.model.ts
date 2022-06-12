@@ -17,6 +17,7 @@
  * under the License.
  */
 
+import { environment } from '@env';
 import { AssetsPerPlant } from '@page/dashboard/model/assets-per-plant.model';
 import { Dashboard, QualityAlertCount, QualityAlertCountByTime } from '@page/dashboard/model/dashboard.model';
 
@@ -29,24 +30,23 @@ const AssetsCountPerCountryAndSupplier: AssetsPerPlant = {
 };
 
 const qualityAlertCount: Record<string, QualityAlertCount[]> = {
-  MOCK: [
+  [environment.defaultRealm.toUpperCase()]: [
     {
-      mspid: 'MOCK',
       qualityType: 'Good',
       alertCount: '0',
-      totalAssetsCount: '10',
+      totalAssetsCount: '3',
       totalAlertCount: '0',
     },
   ],
 };
 
 const qualityAlertCountByTime: Record<string, QualityAlertCountByTime[]> = {
-  MOCK: [
+  [environment.defaultRealm.toUpperCase()]: [
     {
       alertDate: '2022-05-06T06:14:58.148Z',
       qualityType: 'Good',
       alertCount: '0',
-      totalAssetsCount: '10',
+      totalAssetsCount: '3',
       totalAlertCount: '0',
     },
   ],

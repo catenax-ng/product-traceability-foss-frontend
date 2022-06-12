@@ -17,9 +17,10 @@
  * under the License.
  */
 
-import { environment } from '../../../../environments/environment';
+import { environment } from '@env';
 
 export const realmLogo = environment.realmLogo;
+export const defaultRealm = environment.defaultRealm;
 
 export /** @type {*} */
 const realm: string = new RegExp(environment.realmRegExp).exec(window.location.href)?.[1];

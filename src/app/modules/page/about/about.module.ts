@@ -19,15 +19,14 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SvgIconsModule } from '@ngneat/svg-icon';
-import { icons } from '../../shared/shared-icons.module';
-import { SharedModule } from '../../shared/shared.module';
-import { TemplateModule } from '../../shared/template.module';
+import { getI18nPageProvider } from '@core/i18n';
+import { SharedModule, TemplateModule } from '@shared';
 import { AboutRoutingModule } from './about.routing';
 import { AboutComponent } from './presentation/about.component';
 
 @NgModule({
   declarations: [AboutComponent],
-  imports: [CommonModule, TemplateModule, SharedModule, SvgIconsModule.forChild(icons), AboutRoutingModule],
+  imports: [CommonModule, TemplateModule, SharedModule, AboutRoutingModule],
+  providers: [...getI18nPageProvider('page.about')],
 })
 export class AboutModule {}

@@ -18,17 +18,54 @@
  */
 
 import { screen } from '@testing-library/angular';
+import { server } from '@tests/mock-server';
 import { renderComponent } from '@tests/test-render.utils';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardModule } from '../dashboard.module';
 
 describe('Dashboard', () => {
-  it('dummy test', async () => {
-    await renderComponent(DashboardComponent, {
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
+  const renderDashboard = ({ roles = [] } = {}) =>
+    renderComponent(DashboardComponent, {
       imports: [DashboardModule],
+      translations: ['page.dashboard'],
+      roles,
     });
 
+  it('should render header', async () => {
+    await renderDashboard();
+
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
+  });
+
+  it('should render total of parts', async () => {
+    await renderDashboard();
+
+    expect(await screen.findByText('3')).toBeInTheDocument();
+
+    expect(screen.getByText('Total of parts')).toHaveAttribute(
+      'id',
+      screen.getByText('3').getAttribute('aria-describedby'),
+    );
+  });
+
+  it('should render supervisor section when supervisor user', async () => {
+    await renderDashboard({
+      roles: ['supervisor'],
+    });
+
+    expect(await screen.findByText('Total of parts in department')).toBeInTheDocument();
+  });
+
+  it('should render supervisor section when admin user', async () => {
+    await renderDashboard({
+      roles: ['admin'],
+    });
+
+    expect(await screen.findByText('Total of parts in department')).toBeInTheDocument();
   });
 });

@@ -21,7 +21,7 @@ import { Component, Input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { realm } from 'src/app/modules/core/api/api.service.properties';
+import { realm, defaultRealm } from 'src/app/modules/core/api/api.service.properties';
 import { LayoutFacade } from 'src/app/modules/shared/abstraction/layout-facade';
 
 @Component({
@@ -47,6 +47,8 @@ export class SidebarComponent {
   private readonly menu = {
     dashboard: '',
     about: '',
+    parts: '',
+    admin: '',
   };
 
   get sidebarWidth(): number {
@@ -54,10 +56,12 @@ export class SidebarComponent {
   }
 
   constructor(private router: Router, private layoutFacade: LayoutFacade) {
-    this.realm = realm;
+    this.realm = realm || defaultRealm;
     this.menu = {
       dashboard: `/${this.realm}`,
       about: `/${this.realm}/about`,
+      parts: `/${this.realm}/parts`,
+      admin: `/${this.realm}/admin`,
     };
 
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((r: NavigationEnd) => {

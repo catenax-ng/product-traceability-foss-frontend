@@ -36,9 +36,7 @@ export class SharedService {
   }
 
   public getPastDays(amountOfDays: number): string {
-    return DateTime.local()
-      .minus({ days: amountOfDays })
-      .toISODate();
+    return DateTime.local().minus({ days: amountOfDays }).toISODate();
   }
 
   public formatDate(date: Date | string): string {
@@ -70,10 +68,6 @@ export class SharedService {
         status: number;
       }>('/tiles')
       .pipe(map((tiles: { data: Tiles; status: number }) => tiles.data));
-  }
-
-  public getMspids(): Observable<string[]> {
-    return this.apiService.get<{ data: string[] }>('/get-mspids').pipe(map((mspid: { data: string[] }) => mspid.data));
   }
 
   public getAllOrganizations(): Observable<string[]> {

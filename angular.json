@@ -21,10 +21,13 @@
               "keycloak-js",
               "file-saver",
               "chart.js",
-              "@mapbox/mapbox-gl-geocoder",
               "probe.gl/env",
               "@babel/runtime/regenerator",
-              "hammerjs"
+              "hammerjs",
+              "@mswjs/cookies",
+              "@mswjs/interceptors",
+              "@mswjs/interceptors/lib/interceptors/XMLHttpRequest",
+              "@mswjs/interceptors/lib/interceptors/fetch"
             ],
             "customWebpackConfig": {
               "path": "./webpack.config.js",
@@ -36,12 +39,47 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/manifest.json", "src/assets/fonts", "src/assets/images", "src/mockServiceWorker.js", "src/favicon"],
+            "assets": [
+              "src/manifest.json",
+              "src/assets/fonts",
+              "src/assets/images",
+              "src/assets/locales",
+              "src/mockServiceWorker.js",
+              "src/favicon"
+            ],
             "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
+                }
+              ]
+            },
+            "localAuth": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localAuth.ts"
+                }
+              ],
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -92,6 +130,9 @@
             "dev": {
               "browserTarget": "webapp:build:dev"
             },
+            "localAuth": {
+              "browserTarget": "webapp:build:localAuth"
+            },
             "stage": {
               "browserTarget": "webapp:build:stage"
             }
@@ -111,7 +152,14 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "scripts": [],
-            "assets": ["src/manifest.json", "src/assets/fonts", "src/assets/images", "src/mockServiceWorker.js", "src/favicon"],
+            "assets": [
+              "src/manifest.json",
+              "src/assets/fonts",
+              "src/assets/images",
+              "src/assets/locales",
+              "src/mockServiceWorker.js",
+              "src/favicon"
+            ],
             "styles": ["src/styles.scss"],
             "customWebpackConfig": {
               "path": "./webpack.config.js",
