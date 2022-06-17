@@ -17,8 +17,22 @@
  * under the License.
  */
 
-import { _environment } from './_environment.base';
+import { Injectable } from '@angular/core';
+import { State } from '@shared';
 
-export const environment = {
-  ..._environment,
-};
+@Injectable({
+  providedIn: 'root',
+})
+export class StaticIdService {
+  private readonly _staticIds$: State<number[]> = new State<number[]>([]);
+
+  public generateId(componentName: string) {
+    const currentIds = this._staticIds$.snapshot;
+    const currentId = currentIds[componentName] || 0;
+
+    currentIds[componentName] = currentId + 1;
+    this._staticIds$.update(currentIds);
+
+    return componentName + currentId;
+  }
+}

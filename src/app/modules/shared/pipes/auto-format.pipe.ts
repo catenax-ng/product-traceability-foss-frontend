@@ -17,8 +17,29 @@
  * under the License.
  */
 
-import { _environment } from './_environment.base';
+import { Pipe, PipeTransform } from '@angular/core';
+import { CalendarDateModel } from '@core/model/calendar-date.model';
+import { FormatDatePipe } from './format-date.pipe';
 
-export const environment = {
-  ..._environment,
-};
+/**
+ * This pipe allows us to format known objects/types properly in the same way.
+ * Currently, it supports:
+ * - CalendarDateModel - treat it as a calendar date object
+ * - string - return as it is
+ */
+@Pipe({ name: 'autoFormat', pure: false })
+export class AutoFormatPipe implements PipeTransform {
+  constructor(private formatDatePipe: FormatDatePipe) {}
+
+  transform(value: unknown): string {
+    if (value instanceof CalendarDateModel) {
+      return this.formatDatePipe.transform(value);
+    }
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return String(value);
+  }
+}

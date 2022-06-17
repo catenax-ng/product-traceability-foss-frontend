@@ -19,6 +19,7 @@
 
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/api/api.service';
+import { Pagination } from '@core/model/pagination.model';
 import { environment } from '@env';
 import { PartsAssembler } from '@page/parts/core/parts.assembler';
 import { Part, PartResponse, PartsResponse } from '@page/parts/model/parts.model';
@@ -31,7 +32,7 @@ export class PartsService {
 
   constructor(private apiService: ApiService) {}
 
-  public getParts(): Observable<Part[]> {
+  public getParts(): Observable<Pagination<Part>> {
     return this.apiService
       .get<PartsResponse>(`${this.url}/assets`)
       .pipe(map(parts => PartsAssembler.assembleParts(parts)));
@@ -40,12 +41,12 @@ export class PartsService {
   public getPart(id: string): Observable<Part> {
     return this.apiService
       .get<PartResponse>(`${this.url}/assets/${id}`)
-      .pipe(map(part => PartsAssembler.assembleParts([part])[0]));
+      .pipe(map(part => PartsAssembler.assemblePart(part)));
   }
 
   public getRelation(partId: string, childId: string): Observable<Part> {
     return this.apiService
       .get<PartResponse>(`${this.url}/assets/${partId}/children/${childId}`)
-      .pipe(map(part => PartsAssembler.assembleParts([part])[0]));
+      .pipe(map(part => PartsAssembler.assemblePart(part)));
   }
 }

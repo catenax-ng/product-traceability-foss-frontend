@@ -17,8 +17,15 @@
  * under the License.
  */
 
-import { _environment } from './_environment.base';
+export class StaticId {
+  private static nextId = new Map<string, number>();
 
-export const environment = {
-  ..._environment,
-};
+  constructor(private componentName: string) {}
+
+  public generateId() {
+    const currentId = StaticId.nextId.get(this.componentName) || 0;
+    StaticId.nextId.set(this.componentName, currentId + 1);
+
+    return this.componentName + currentId;
+  }
+}

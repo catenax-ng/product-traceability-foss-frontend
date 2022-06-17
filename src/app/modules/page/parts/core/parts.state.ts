@@ -36,6 +36,10 @@ export class PartsState {
     this._selectedPart.update(partDetailView);
   }
 
+  get selectedPart(): View<Part> {
+    return this._selectedPart.snapshot;
+  }
+
   get parts$(): Observable<View<Part[]>> {
     return this._parts$.observable;
   }

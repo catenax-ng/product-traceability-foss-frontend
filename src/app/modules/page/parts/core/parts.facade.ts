@@ -18,6 +18,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Pagination } from '@core/model/pagination.model';
 import { PartsService } from '@page/parts/core/parts.service';
 import { PartsState } from '@page/parts/core/parts.state';
 import { Part } from '@page/parts/model/parts.model';
@@ -38,6 +39,10 @@ export class PartsFacade {
     this.partsState.selectedPart = { data: part };
   }
 
+  get selectedPart(): Part {
+    return this.partsState.selectedPart?.data;
+  }
+
   get parts$(): Observable<View<Part[]>> {
     // IMPORTANT: this delay is needed for view-container directive
     return this.partsState.parts$.pipe(delay(0));
@@ -47,8 +52,8 @@ export class PartsFacade {
     this.partsState.parts = { loader: true };
 
     this.partsService.getParts().subscribe({
-      next: (parts: Part[]) => {
-        this.partsState.parts = { data: parts };
+      next: (partsPage: Pagination<Part>) => {
+        this.partsState.parts = { data: partsPage.content };
       },
       error: error => (this.partsState.parts = { error }),
     });

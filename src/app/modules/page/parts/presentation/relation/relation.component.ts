@@ -17,8 +17,10 @@
  * under the License.
  */
 
-import { _environment } from './_environment.base';
+import { Component } from '@angular/core';
 
-export const environment = {
-  ..._environment,
-};
+@Component({
+  selector: 'app-relation',
+  templateUrl: './relation.component.html',
+})
+export class RelationComponent {}

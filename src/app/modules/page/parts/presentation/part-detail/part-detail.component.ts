@@ -17,24 +17,25 @@
  * under the License.
  */
 
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { realm } from '@core/api/api.service.properties';
 import { PartsAssembler } from '@page/parts/core/parts.assembler';
 import { PartsFacade } from '@page/parts/core/parts.facade';
 import { Part } from '@page/parts/model/parts.model';
-import { FormatDatePipe, State, View } from '@shared';
+import { State, View } from '@shared';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-part-detail',
   templateUrl: './part-detail.component.html',
   styleUrls: ['./part-detail.component.scss'],
 })
-export class PartDetailComponent implements AfterViewInit {
+export class PartDetailComponent implements AfterViewInit, OnDestroy {
   @ViewChild('sidenav') sidenav: MatSidenav;
+  @Output() closeSidebar = new EventEmitter<void>();
+
   public partDetails$: Observable<View<Part>>;
   public relationPartDetails$: Observable<View<Part>>;
   public manufacturerDetails$: Observable<View<Part>>;
@@ -42,22 +43,16 @@ export class PartDetailComponent implements AfterViewInit {
 
   private readonly _isOpen$: State<boolean> = new State<boolean>(false);
 
-  constructor(private readonly partsFacade: PartsFacade, formatDate: FormatDatePipe, private readonly router: Router) {
+  constructor(private readonly partsFacade: PartsFacade, private readonly router: Router) {
     this.relationPartDetails$ = this.partsFacade.selectedPart$;
-    this.partDetails$ = this.partsFacade.selectedPart$.pipe(
-      PartsAssembler.mapPartForView(),
-      map(partView => {
-        if (!partView.data) {
-          return partView;
-        }
-
-        partView.data.productionDate = formatDate.transform(partView.data.productionDate) as any;
-        return partView;
-      }),
-    );
+    this.partDetails$ = this.partsFacade.selectedPart$.pipe(PartsAssembler.mapPartForView());
 
     this.manufacturerDetails$ = this.partsFacade.selectedPart$.pipe(PartsAssembler.mapPartForManufacturerView());
     this.customerDetails$ = this.partsFacade.selectedPart$.pipe(PartsAssembler.mapPartForCustomerView());
+  }
+
+  ngOnDestroy(): void {
+    this.partsFacade.selectedPart = null;
   }
 
   ngAfterViewInit(): void {
@@ -83,6 +78,7 @@ export class PartDetailComponent implements AfterViewInit {
   }
 
   public openRelationPage(part: Part): void {
+    this.partsFacade.selectedPart = null;
     void this.router.navigate([`${realm}/parts/relations/${part.id}`]);
   }
 }

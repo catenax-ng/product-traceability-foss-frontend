@@ -17,27 +17,19 @@
  * under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Pagination, PaginationResponse } from '@core/model/pagination.model';
 
-import { PartRelationComponent } from './part-relation.component';
-
-describe('RelationComponent', () => {
-  let component: PartRelationComponent;
-  let fixture: ComponentFixture<PartRelationComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [PartRelationComponent],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PartRelationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  xit('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+export class PaginationAssembler {
+  public static assemblePagination<ResponseItem, Item>(
+    response: PaginationResponse<ResponseItem>,
+    contentMapper: (item: ResponseItem) => Item,
+  ): Pagination<Item> {
+    return {
+      page: response.page,
+      pageCount: response.pageCount,
+      pageSize: response.pageSize,
+      totalItems: response.totalItems,
+      content: response.content.map(contentMapper),
+    };
+  }
+}

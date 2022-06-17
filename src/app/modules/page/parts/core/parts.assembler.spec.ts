@@ -17,15 +17,25 @@
  * under the License.
  */
 
+import { CalendarDateModel } from '@core/model/calendar-date.model';
+import { Pagination } from '@core/model/pagination.model';
 import { PartsAssembler } from '@page/parts/core/parts.assembler';
 import { Part } from '@page/parts/model/parts.model';
 import { of } from 'rxjs';
 
 describe('PartsAssembler', () => {
+  const page = <T>(content: T[]): Pagination<T> => ({
+    content,
+    pageCount: 1,
+    totalItems: content.length,
+    page: 0,
+    pageSize: content.length,
+  });
+
   describe('assembleParts', () => {
     it('should return null if array is empty or undefined', () => {
       expect(PartsAssembler.assembleParts(null)).toBe(null);
-      expect(PartsAssembler.assembleParts([])).toBe(null);
+      expect(PartsAssembler.assembleParts(page([]))).toBe(null);
     });
 
     it('should format the object correctly', () => {
@@ -70,12 +80,14 @@ describe('PartsAssembler', () => {
           nameAtCustomer: nameAtCustomer,
           customerPartId: customerPartId,
           qualityType: 'high',
-          productionDate: new Date(manufacturingDate),
+          productionDate: new CalendarDateModel(manufacturingDate),
           children: childDescriptions.map(child => child.id),
         });
       }
 
-      expect(JSON.stringify(PartsAssembler.assembleParts(testData))).toStrictEqual(JSON.stringify(expected));
+      expect(JSON.stringify(PartsAssembler.assembleParts(page(testData)).content)).toStrictEqual(
+        JSON.stringify(expected),
+      );
     });
   });
 

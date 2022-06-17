@@ -17,15 +17,13 @@
  * under the License.
  */
 
+import { _environment } from './_environment.base';
+
 export const environment = {
-  production: false,
-  keycloakUrl: 'https://auth.domain.tld/auth',
+  ..._environment,
+  production: true,
   multiTenant: true,
-  defaultRealm: 'lion',
-  baseUrl: '/',
-  apiUrl: '/api/v1',
-  realmLogo: '/assets/images/logo.png',
-  realmRegExp: '^https?://[^/]+/([-a-z-A-Z-0-9]+)',
-  laapi: 'https://api.domain.tld/v1/',
-  aems: 'https://api.aems.domain.tld/v1/',
+  defaultRealm: 'mock',
+  // temproray
+  authDisabled: true,
 };

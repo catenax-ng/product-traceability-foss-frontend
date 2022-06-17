@@ -17,14 +17,5 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<mat-card>
-  <mat-card-title>{{ title }}</mat-card-title>
-  <mat-card-content class="card-container">
-    <div class="card-list--container">
-      <div *ngFor="let item of list | ToKeyValue" class="card-list--row">
-        <p class="card-list--cell card-list--key">{{ 'partDetail.' + item.key | i18n }}</p>
-        <p class="card-list--cell card-list--value">{{ item.value | autoFormat }}</p>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+<app-part-relation></app-part-relation>
+<app-part-detail></app-part-detail>
