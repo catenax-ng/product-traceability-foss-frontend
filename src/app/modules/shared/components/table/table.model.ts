@@ -17,9 +17,18 @@
  * under the License.
  */
 
+import { SortableHeaders } from '@page/parts/model/parts.model';
+
+export type TableHeaderSort = [SortableHeaders, 'asc' | 'desc'];
+
 export interface TableConfig {
   displayedColumns: string[];
   sortableColumns: Record<string, boolean>;
   header?: string[];
-  isPagination?: boolean;
+}
+
+export interface TableEventConfig {
+  page: number;
+  pageSize: number;
+  sorting: TableHeaderSort;
 }

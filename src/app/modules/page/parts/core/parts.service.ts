@@ -17,12 +17,14 @@
  * under the License.
  */
 
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/api/api.service';
 import { Pagination } from '@core/model/pagination.model';
 import { environment } from '@env';
 import { PartsAssembler } from '@page/parts/core/parts.assembler';
-import { Part, PartResponse, PartsResponse } from '@page/parts/model/parts.model';
+import { Part, PartResponse, PartsResponse, QualityType } from '@page/parts/model/parts.model';
+import { TableHeaderSort } from '@shared/components/table/table.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -32,9 +34,11 @@ export class PartsService {
 
   constructor(private apiService: ApiService) {}
 
-  public getParts(): Observable<Pagination<Part>> {
+  public getParts(page: number, pageSize: number, sorting: TableHeaderSort): Observable<Pagination<Part>> {
+    const sort = PartsAssembler.mapSortToApiSort(sorting);
+    const params = new HttpParams().set('page', page).set('size', pageSize).set('sort', sort);
     return this.apiService
-      .get<PartsResponse>(`${this.url}/assets`)
+      .getBy<PartsResponse>(`${this.url}/assets`, params)
       .pipe(map(parts => PartsAssembler.assembleParts(parts)));
   }
 
@@ -48,5 +52,9 @@ export class PartsService {
     return this.apiService
       .get<PartResponse>(`${this.url}/assets/${partId}/children/${childId}`)
       .pipe(map(part => PartsAssembler.assemblePart(part)));
+  }
+
+  public putPart(part: Part): Observable<Part> {
+    return this.apiService.put<Part>(`${this.url}/assets/${part.id}`, part);
   }
 }

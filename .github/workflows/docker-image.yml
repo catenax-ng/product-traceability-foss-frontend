@@ -15,18 +15,18 @@ jobs:
       packages: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-        
-    - name: Login to Docker Registry
-      uses: docker/login-action@v2
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-          
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest , ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}

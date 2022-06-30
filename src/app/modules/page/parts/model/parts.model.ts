@@ -20,7 +20,25 @@
 import type { CalendarDateModel } from '@core/model/calendar-date.model';
 import type { PaginationResponse } from '@core/model/pagination.model';
 
-export type QualityType = 'high' | 'medium' | 'low';
+export type SortableHeaders =
+  | 'id'
+  | 'name'
+  | 'manufacturer'
+  | 'serialNumber'
+  | 'partNumber'
+  | 'productionCountry'
+  | 'nameAtCustomer'
+  | 'customerPartId'
+  | 'qualityType'
+  | 'productionDate';
+
+export enum QualityType {
+  Ok = 'ok',
+  Minor = 'minor',
+  Major = 'major',
+  Critical = 'critical',
+  LifeThreatening = 'life-threatening',
+}
 
 export interface Part {
   id: string;

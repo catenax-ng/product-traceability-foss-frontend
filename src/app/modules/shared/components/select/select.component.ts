@@ -17,23 +17,22 @@
  * under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { LoadedElements } from '@page/parts/relations/model/relations.model';
-import { State } from '@shared';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-@Injectable()
-export class RelationsState {
-  private readonly _loadedElements$: State<LoadedElements> = new State<LoadedElements>({});
+export interface SelectOption {
+  lable: string;
+  value?: string;
+}
 
-  get loadedElements(): LoadedElements {
-    return this._loadedElements$.snapshot;
-  }
+@Component({
+  selector: 'app-select',
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss'],
+})
+export class SelectComponent {
+  @Input() lable: string;
+  @Input() selectedValue: string;
+  @Input() options: SelectOption[];
 
-  set loadedElements(data: LoadedElements) {
-    this._loadedElements$.update(data);
-  }
-
-  public resetLoadedElements(): void {
-    this._loadedElements$.reset();
-  }
+  @Output() selected: EventEmitter<string> = new EventEmitter<string>();
 }

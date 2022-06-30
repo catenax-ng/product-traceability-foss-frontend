@@ -17,19 +17,16 @@
  * under the License.
  */
 
-import { rest } from 'msw';
-import { mockAssets } from './assets.model';
+import { _environment } from './_environment.base';
 
-export const assetHandlers = [
-  rest.get('/get-asset-detail', (req, res, ctx) => {
-    const serialNumberCustomer = req.url.searchParams.get('serialNumberCustomer');
-
-    return res(ctx.status(200), ctx.json(mockAssets[serialNumberCustomer]));
-  }),
-
-  rest.get('/get-asset-parent', (req, res, ctx) => {
-    const serialNumberCustomer = req.url.searchParams.get('serialNumberCustomer');
-
-    return res(ctx.status(200), ctx.json(mockAssets[serialNumberCustomer]));
-  }),
-];
+export const environment = {
+  ..._environment,
+  multiTenant: true,
+  mockService: false,
+  authDisabled: false,
+  apiUrl: 'https://traceability.int.demo.catena-x.net/api',
+  keycloakUrl: 'https://centralidp.dev.demo.catena-x.net/auth',
+  clientId: 'Cl10-CX-Part',
+  defaultRealm: 'CX-Central',
+  api: '',
+};

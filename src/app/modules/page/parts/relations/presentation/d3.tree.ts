@@ -17,6 +17,7 @@
  * under the License.
  */
 
+import { QualityType } from '@page/parts/model/parts.model';
 import { TreeData, TreeStructure } from '@page/parts/relations/model/relations.model';
 import * as d3 from 'd3';
 import { DragBehavior, DraggedElementBaseType, HierarchyNode, PieArcDatum } from 'd3';
@@ -125,7 +126,7 @@ class RelationTree {
 
     closeNode
       .append('text')
-      .attr('dy', '0.32em')
+      .attr('dy', '0.26em')
       .classed('tree--element__text tree--element__closing-text tree--element__closing-animation', true)
       .text(' - ');
   }
@@ -149,8 +150,16 @@ class RelationTree {
         return '';
       }
 
-      if (text.length > 9) {
+      if (text.length > 12) {
         return text.substring(0, 9) + '...';
+      }
+
+      if (text.length < 12) {
+        const spaceCount = 12 - text.length;
+        const spacerStart = new Array(Math.floor(spaceCount / 2)).fill(' ').join('');
+        const spacerEnd = new Array(Math.ceil(spaceCount / 2)).fill(' ').join('');
+
+        return `${spacerStart}${text}${spacerEnd}`;
       }
       return text;
     };
@@ -185,11 +194,17 @@ class RelationTree {
         .append('path')
         .attr('d', node => arc(node))
         .classed('tree--element__border-done', ({ data }: TreeElement) => data.state === 'done')
-        .classed('tree--element__border-risk', ({ data }: TreeElement) => data.state === 'risk');
+        .classed('tree--element__border-minor', ({ data }: TreeElement) => data.state === QualityType.Minor)
+        .classed('tree--element__border-major', ({ data }: TreeElement) => data.state === QualityType.Major)
+        .classed('tree--element__border-critical', ({ data }: TreeElement) => data.state === QualityType.Critical)
+        .classed(
+          'tree--element__border-life-threatening',
+          ({ data }: TreeElement) => data.state === QualityType.LifeThreatening,
+        );
     };
 
     const data = [
-      { inner: -3, outer: 0, start: -0.3, end: 1.6 },
+      { inner: -3.2, outer: 0, start: -0.3, end: 1.6 },
       { inner: -7, outer: -3, start: 0, end: 0.4 },
       { inner: -7, outer: -3, start: 1.5, end: 1.8 },
       { inner: -7, outer: -3, start: 0.7, end: 0.9 },
@@ -207,8 +222,8 @@ class RelationTree {
       .outerRadius(this.r)
       .innerRadius(this.r - 5);
 
-    const pie = d3.pie().padAngle(0.05);
-    const arcs = pie(new Array(25).fill(1));
+    const pie = d3.pie().padAngle(1);
+    const arcs = pie(new Array(3).fill(1));
     arc.cornerRadius(5);
 
     const border = svg
@@ -219,10 +234,15 @@ class RelationTree {
       .join('a')
       .filter(({ data }: TreeElement) => data.state === 'loading')
       .attr('transform', ({ y, x }: TreeElement) => `translate(${y},${x})`)
-      .append('g')
-      .classed('tree--element__border-loading', true);
+      .append('g');
 
-    arcs.forEach(node => border.append('path').attr('d', arc(node)));
+    arcs.forEach((node, index) =>
+      border
+        .append('path')
+        .attr('d', arc(node))
+        .classed('tree--element__border-loading', true)
+        .classed('tree--element__border-loading-' + index, true),
+    );
   }
 
   private addOpeningArrow(svg: TreeSvg, root: HierarchyNode<TreeStructure>) {

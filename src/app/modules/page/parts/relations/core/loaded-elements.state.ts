@@ -17,4 +17,28 @@
  * under the License.
  */
 
-export const mockAssets = {};
+import { Injectable } from '@angular/core';
+import { LoadedElements } from '@page/parts/relations/model/relations.model';
+import { State } from '@shared';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class LoadedElementsState {
+  private readonly _loadedElements$: State<LoadedElements> = new State<LoadedElements>({});
+
+  get loadedElements(): LoadedElements {
+    return this._loadedElements$.snapshot;
+  }
+
+  get loadedElements$(): Observable<LoadedElements> {
+    return this._loadedElements$.observable;
+  }
+
+  set loadedElements(data: LoadedElements) {
+    this._loadedElements$.update(data);
+  }
+
+  public resetLoadedElements(): void {
+    this._loadedElements$.reset();
+  }
+}

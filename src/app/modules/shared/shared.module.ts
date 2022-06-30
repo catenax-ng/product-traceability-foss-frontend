@@ -19,7 +19,9 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StaticIdService } from '@shared/service/staticId.service';
+import { PartsService } from '../page/parts/core/parts.service';
+import { SelectComponent } from './components/select/select.component';
+import { StaticIdService } from './service/staticId.service';
 import { I18NextModule } from 'angular-i18next';
 import { CardIconComponent } from './components/card-icon/card-icon.component';
 import { CardListComponent } from './components/card-list/card-list.component';
@@ -80,6 +82,7 @@ import { AutoFormatPipe } from './pipes/auto-format.pipe';
     CardIconComponent,
     CardListComponent,
     ToKeyValuePipe,
+    SelectComponent,
   ],
   imports: [TemplateModule, TabsModule, RouterModule, I18NextModule],
   exports: [
@@ -110,7 +113,9 @@ import { AutoFormatPipe } from './pipes/auto-format.pipe';
     LanguageSelectorComponent,
     CardIconComponent,
     CardListComponent,
+    ToKeyValuePipe,
+    SelectComponent,
   ],
-  providers: [SharedService, OrganizationsResolver, FormatDatePipe, StaticIdService],
+  providers: [SharedService, OrganizationsResolver, FormatDatePipe, StaticIdService, PartsService],
 })
 export class SharedModule {}
