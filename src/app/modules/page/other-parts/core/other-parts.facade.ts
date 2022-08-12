@@ -25,6 +25,7 @@ import { Part } from '@page/parts/model/parts.model';
 import { TableHeaderSort } from '@shared/components/table/table.model';
 import { View } from '@shared/model/view.model';
 import { InvestigationsService } from '@shared/service/investigations.service';
+import { PartsService } from '@shared/service/parts.service';
 import { Observable, Subscription } from 'rxjs';
 
 @Injectable()
@@ -34,8 +35,8 @@ export class OtherPartsFacade {
 
   constructor(
     private readonly otherPartsService: OtherPartsService,
+    private readonly partsService: PartsService,
     private readonly otherPartsState: OtherPartsState,
-    private readonly investigationsService: InvestigationsService,
   ) {}
 
   public get customerParts$(): Observable<View<Pagination<Part>>> {
@@ -48,7 +49,7 @@ export class OtherPartsFacade {
 
   public setCustomerParts(page = 0, pageSize = 5, sorting: TableHeaderSort = null): void {
     this.customerPartsSubscription?.unsubscribe();
-    this.customerPartsSubscription = this.otherPartsService.getCustomerParts(page, pageSize, sorting).subscribe({
+    this.customerPartsSubscription = this.partsService.getParts(page, pageSize, sorting).subscribe({
       next: data => (this.otherPartsState.customerParts = { data }),
       error: error => (this.otherPartsState.customerParts = { error }),
     });
@@ -56,7 +57,7 @@ export class OtherPartsFacade {
 
   public setSupplierParts(page = 0, pageSize = 5, sorting: TableHeaderSort = null): void {
     this.supplierPartsSubscription?.unsubscribe();
-    this.supplierPartsSubscription = this.otherPartsService.getSupplierParts(page, pageSize, sorting).subscribe({
+    this.supplierPartsSubscription = this.partsService.getParts(page, pageSize, sorting).subscribe({
       next: data => (this.otherPartsState.supplierParts = { data }),
       error: error => (this.otherPartsState.supplierParts = { error }),
     });
