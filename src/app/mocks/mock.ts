@@ -20,5 +20,5 @@
 import { setupWorker } from 'msw';
 import { dashboardHandler, investigationsHandlers, otherPartsHandlers, partsHandlers } from './services';
 
-const handlers = [...dashboardHandler, ...partsHandlers, ...otherPartsHandlers, ...investigationsHandlers];
+const handlers = [...otherPartsHandlers, ...investigationsHandlers];
 export const worker = setupWorker(...handlers);
