@@ -117,7 +117,7 @@ export const mockAssetList: Record<string, PartResponse> = {
   [MOCK_part_5.id]: MOCK_part_5,
 };
 
-export const mockPartsList = [
+export const mockBmwAssets = [
   {
     id: 'urn:uuid:55c376ed-e39d-4525-96e6-71f3def7ae41',
     idShort: '--',
