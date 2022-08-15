@@ -30,7 +30,7 @@ export const partsHandlers = [
     return res(ctx.status(200), ctx.json(mockAssetsCountriesMap));
   }),
 
-  rest.get(`${environment.apiUrl}/assets/:partId`, (req, res, ctx) => {
+  /*rest.get(`${environment.apiUrl}/assets/:partId`, (req, res, ctx) => {
     const { partId } = req.params;
     return res(ctx.status(200), ctx.json(mockAssetList[partId as string]));
   }),
@@ -44,5 +44,5 @@ export const partsHandlers = [
   rest.get(`${environment.apiUrl}/assets/:assetId/children/:childId`, (req, res, ctx) => {
     const { childId } = req.params;
     return res(ctx.status(200), ctx.json(mockAssetList[childId as string]));
-  }),
+  }),*/
 ];
