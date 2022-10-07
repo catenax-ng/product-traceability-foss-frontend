@@ -23,25 +23,13 @@ import * as d3 from 'd3';
 import Tree from './tree.d3';
 import { D3TreeDummyData } from './tree.d3.test.data';
 
-// jsdom don't implement SVGGElement
-(SVGElement.prototype as SVGGElement).getBBox = jest.fn().mockReturnValue({ width: 0, height: 0, x: 0, y: 0 });
-
 describe('D3 Tree', () => {
   const id = 'id';
   const mainElement = d3.select(document.body).append('svg') as TreeSvg;
-  const openDetails = jest.fn();
-  const updateChildren = jest.fn();
+  const openDetails = jasmine.createSpy();
+  const updateChildren = jasmine.createSpy();
 
   let treeData: TreeData;
-
-  const copyData = (obj: object) =>
-    Object.entries(obj).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: value,
-      }),
-      {},
-    );
 
   beforeEach(() => (treeData = { id, mainElement, openDetails, updateChildren }));
 
@@ -52,7 +40,6 @@ describe('D3 Tree', () => {
       _zoom: 1,
       _viewX: 0,
       _viewY: 0,
-      _minimapConnector: { onZoom: expect.any(Function), onDrag: expect.any(Function) },
       id,
       mainElement,
       width: 1024,
@@ -60,7 +47,7 @@ describe('D3 Tree', () => {
       r: 60,
     };
 
-    expect(tree).toMatchObject(expected);
+    expect(tree).toEqual(jasmine.objectContaining(expected));
   });
 
   it('should render tree', () => {

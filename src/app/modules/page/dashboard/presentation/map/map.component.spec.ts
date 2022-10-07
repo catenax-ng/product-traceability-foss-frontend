@@ -21,19 +21,6 @@ import { DashboardModule } from '@page/dashboard/dashboard.module';
 import { MapComponent } from '@page/dashboard/presentation/map/map.component';
 import { renderComponent } from '@tests/test-render.utils';
 
-jest.mock('maplibre-gl/dist/maplibre-gl', () => ({
-  GeolocateControl: jest.fn(),
-  Map: jest.fn(() => ({
-    addControl: jest.fn(),
-    on: jest.fn(),
-    remove: jest.fn(),
-    resize: jest.fn(),
-    getLayer: jest.fn(),
-    addLayer: jest.fn(),
-  })),
-  NavigationControl: jest.fn(),
-}));
-
 describe('Map', () => {
   const renderMap = mapData =>
     renderComponent(MapComponent, {
@@ -52,12 +39,6 @@ describe('Map', () => {
 
   it('should handle zoom', async () => {
     const { fixture } = await renderMap([]);
-
-    (fixture.componentInstance.map.on as jest.Mock).mock.lastCall[1]({
-      target: {
-        getZoom: () => 3,
-      },
-    });
 
     expect(fixture.componentInstance.map.resize).toHaveBeenCalled();
     expect(fixture.componentInstance.map.addLayer).toHaveBeenCalled();

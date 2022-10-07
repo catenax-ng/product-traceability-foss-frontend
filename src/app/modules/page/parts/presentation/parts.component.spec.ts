@@ -29,9 +29,9 @@ import { MOCK_part_1 } from '../../../../mocks/services/parts-mock/parts.test.mo
 import { PartsModule } from '../parts.module';
 
 describe('Parts', () => {
-  beforeAll(() => server.listen());
+  beforeAll(() => server.start());
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  afterAll(() => server.stop());
 
   const renderParts = () => {
     return renderComponent(`<app-sidenav></app-sidenav><app-parts></app-parts>`, {

@@ -49,7 +49,7 @@ describe('Parts facade', () => {
 
   describe('setParts', () => {
     it('should set parts if request is successful', async () => {
-      const serviceSpy = jest.spyOn(partsServiceMok, 'getMyParts');
+      const serviceSpy = spyOn(partsServiceMok, 'getMyParts');
       partsFacade.setMyParts(0, 10);
 
       await waitFor(() => expect(serviceSpy).toHaveBeenCalledTimes(1));
@@ -60,10 +60,9 @@ describe('Parts facade', () => {
     });
 
     it('should not set parts if request fails', async () => {
-      const serviceSpy = jest.spyOn(partsServiceMok, 'getMyParts');
       const spyData = new BehaviorSubject(null).pipe(switchMap(_ => throwError(() => new Error('error'))));
+      spyOn(partsServiceMok, 'getMyParts').and.returnValue(spyData);
 
-      serviceSpy.mockReturnValue(spyData);
       partsFacade.setMyParts(0, 10);
 
       const parts = await firstValueFrom(partsState.myParts$);
@@ -81,16 +80,15 @@ describe('Parts facade', () => {
     });
 
     it('should set and update selected Parts even if it fails', async () => {
-      const serviceSpy = jest.spyOn(partsServiceMok, 'getPart');
       const spyData = new BehaviorSubject(null).pipe(switchMap(_ => throwError(() => new Error('error'))));
+      const serviceSpy = spyOn(partsServiceMok, 'getPart').and.returnValue(spyData);
 
-      serviceSpy.mockReturnValue(spyData);
       partsFacade.setSelectedParts(PartsAssembler.assemblePart(MOCK_part_1).children);
       await waitFor(() =>
         expect(partsState.selectedParts).toEqual([
           { id: 'MOCK_part_2', error: true },
           { id: 'MOCK_part_3', error: true },
-        ]),
+        ] as Part[]),
       );
     });
   });

@@ -26,8 +26,8 @@ import { D3TreeDummyData } from '../tree/tree.d3.test.data';
 describe('D3 Tree', () => {
   const id = 'id';
   const mainElement = d3.select(document.body).append('svg') as TreeSvg;
-  const openDetails = jest.fn();
-  const updateChildren = jest.fn();
+  const openDetails = jasmine.createSpy();
+  const updateChildren = jasmine.createSpy();
   const treeInstance = new Tree({ id, mainElement, openDetails, updateChildren });
 
   let minimapData: MinimapData;
@@ -63,7 +63,7 @@ describe('D3 Tree', () => {
       xOffset: -4.5,
     };
 
-    expect(tree).toMatchObject(expected);
+    expect(tree).toEqual(jasmine.objectContaining(expected));
   });
 
   it('should render minimap', () => {

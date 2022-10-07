@@ -30,13 +30,13 @@ import { server } from '@tests/mock-test-server';
 import { renderComponent } from '@tests/test-render.utils';
 
 describe('requestInvestigationComponent', () => {
-  beforeAll(() => server.listen());
+  beforeAll(() => server.start());
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  afterAll(() => server.stop());
 
-  const deselectPartMock = jest.fn();
-  const clearSelectedMock = jest.fn();
-  const sidenavIsClosingMock = jest.fn();
+  const deselectPartMock = jasmine.createSpy();
+  const clearSelectedMock = jasmine.createSpy();
+  const sidenavIsClosingMock = jasmine.createSpy();
   const currentSelectedItems = [{ name: 'part_1' }, { name: 'part_2' }, { name: 'part_3' }];
 
   const renderRequestInvestigationComponent = () =>
@@ -103,8 +103,8 @@ describe('requestInvestigationComponent', () => {
     });
     const { componentInstance } = fixture;
 
-    const spy = jest.spyOn(componentInstance.clearSelected, 'emit');
-    const spy_2 = jest.spyOn((componentInstance as any).investigationsService, 'postInvestigation');
+    const spy = spyOn(componentInstance.clearSelected, 'emit');
+    const spy_2 = spyOn((componentInstance as any).investigationsService, 'postInvestigation');
 
     const testText = 'This is for a testing purpose.';
 

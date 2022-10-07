@@ -26,7 +26,7 @@ describe('D3 Helper', () => {
   const mainElement = d3.select(document.body).append('svg') as TreeSvg;
 
   it('should init drag on element', () => {
-    const mockFn = jest.fn();
+    const mockFn = jasmine.createSpy();
     mainElement.call(HelperD3.initDrag(mainElement, mockFn));
 
     mainElement.node().dispatchEvent(new MouseEvent('mousedown', { view: window }));

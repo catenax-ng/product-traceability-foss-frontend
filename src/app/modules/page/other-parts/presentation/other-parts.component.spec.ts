@@ -19,6 +19,7 @@
 
 import { OtherPartsState } from '@page/other-parts/core/other-parts.state';
 import { PartsState } from '@page/parts/core/parts.state';
+import { Part } from '@page/parts/model/parts.model';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { screen, waitFor } from '@testing-library/angular';
 import { server } from '@tests/mock-test-server';
@@ -39,9 +40,9 @@ import { OtherPartsModule } from '../other-parts.module';
 import { OtherPartsComponent } from './other-parts.component';
 
 describe('Other Parts', () => {
-  beforeAll(() => server.listen());
+  beforeAll(() => server.start());
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  afterAll(() => server.stop());
 
   let otherPartsState: OtherPartsState;
   beforeEach(() => (otherPartsState = new OtherPartsState()));
@@ -93,11 +94,14 @@ describe('Other Parts', () => {
     const expected = ['test', 'test2'];
 
     renderedComponent.fixture.componentInstance.onMultiSelect(expected);
-    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected]);
+    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected] as unknown as Part[][]);
 
     renderedComponent.fixture.componentInstance.onTabChange({ index: 1 } as any);
     renderedComponent.fixture.componentInstance.onMultiSelect(expected);
-    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected, expected]);
+    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([
+      expected,
+      expected,
+    ] as unknown as Part[][]);
   });
 
   it('should clear currentSelectedParts', async () => {
@@ -109,18 +113,18 @@ describe('Other Parts', () => {
     componentInstance.onMultiSelect(expected);
     componentInstance.onTabChange({ index: 1 } as any);
     componentInstance.onMultiSelect(expected);
-    expect(componentInstance.selectedItems).toEqual([expected, expected]);
+    expect(componentInstance.selectedItems).toEqual([expected, expected] as unknown as Part[][]);
 
     componentInstance.onTabChange({ index: 0 } as any);
     componentInstance.clearSelected();
-    expect(componentInstance.selectedItems).toEqual([[], expected]);
+    expect(componentInstance.selectedItems).toEqual([[], expected] as unknown as Part[][]);
   });
 
   it('should remove only one item from current selection', async () => {
     const { fixture } = await renderOtherParts();
     const { componentInstance } = fixture;
 
-    const expected = [{ id: 'test' }, { id: 'test2' }];
+    const expected = [{ id: 'test' }, { id: 'test2' }] as Part[];
 
     componentInstance.onMultiSelect(expected);
     componentInstance.onTabChange({ index: 1 } as any);
@@ -129,7 +133,7 @@ describe('Other Parts', () => {
 
     componentInstance.onTabChange({ index: 0 } as any);
     componentInstance.removeItemFromSelection({ id: 'test' } as any);
-    expect(componentInstance.selectedItems).toEqual([[{ id: 'test2' }], expected]);
+    expect(componentInstance.selectedItems).toEqual([[{ id: 'test2' }] as Part[], expected]);
   });
 
   describe('onTableConfigChange', () => {

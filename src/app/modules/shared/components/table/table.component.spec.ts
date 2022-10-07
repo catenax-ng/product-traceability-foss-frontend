@@ -28,7 +28,12 @@ describe('TableComponent', () => {
   const generateTableContent = (size: number) => {
     return Array.apply(null, Array(size)).map((_, i) => ({ name: 'name_' + i, test: 'test' }));
   };
-  const renderTable = (size: number, displayedColumns = ['name'], header = { name: 'Name' }, selected = jest.fn()) => {
+  const renderTable = (
+    size: number,
+    displayedColumns = ['name'],
+    header = { name: 'Name' },
+    selected = jasmine.createSpy(),
+  ) => {
     const content = generateTableContent(size);
     const data = { page: 0, pageSize: 10, totalItems: 100, content } as Pagination<unknown>;
 
@@ -117,7 +122,7 @@ describe('TableComponent', () => {
       sortableColumns: { name: true },
     };
 
-    const configChange = jest.fn();
+    const configChange = jasmine.createSpy();
     const component = await renderComponent(
       `<app-table  [data]='data' [tableConfig]='tableConfig' (configChanged)='configChange($event)'></app-table>`,
       {
@@ -131,7 +136,7 @@ describe('TableComponent', () => {
       },
     );
 
-    const spy = jest.spyOn(component.fixture.componentInstance, 'configChange');
+    const spy = spyOn(component.fixture.componentInstance, 'configChange');
     const nameElement = screen.getByText('Name Sort');
     nameElement.click();
 
@@ -150,7 +155,7 @@ describe('TableComponent', () => {
 
   it('should select one item', async () => {
     const tableSize = 3;
-    const selected = jest.fn();
+    const selected = jasmine.createSpy();
     await renderTable(tableSize, ['name'], { name: 'Name for test' }, selected);
 
     const tableElement = screen.getByText('name_0');

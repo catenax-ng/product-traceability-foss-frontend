@@ -24,9 +24,9 @@ import { InvestigationsModule } from '../investigations.module';
 import { InvestigationsComponent } from './investigations.component';
 
 describe('InvestigationsInboxComponent', () => {
-  beforeAll(() => server.listen());
+  beforeAll(() => server.start());
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  afterAll(() => server.stop());
 
   const renderInvestigationsInbox = () =>
     renderComponent(InvestigationsComponent, {
