@@ -17,16 +17,23 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { I18nMessage } from '@shared/model/i18n-message';
+/**
+ * Types or status of toast messages
+ * Success status - shows the toast with a green status bar, typically used to inform the user
+ * warning status - shows the toast with a yellow status bar, typically used to alert the user
+ * error status - shows the toast with a red status bar, typically used for error messages
+ * informative status - shows the toast with a blue status bar, typically used for informative messages
+ */
 
-export interface CallAction {
-  text: I18nMessage;
-  link: string;
-  linkQueryParams?: Record<string, string>;
+export const enum ToastStatus {
+  Success = 'success',
+  Warning = 'warning',
+  Error = 'error',
+  Informative = 'informative',
 }
 
-// CTA stands for call-to-action
-export interface CtaNotificationData {
-  text: I18nMessage;
-  actions: CallAction[];
+export class ToastMessage {
+  public isSliderON = true;
+
+  constructor(public id: number, public message: string, public status: ToastStatus | null, public timeout: number) {}
 }

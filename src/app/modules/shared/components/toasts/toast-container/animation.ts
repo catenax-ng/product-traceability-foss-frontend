@@ -17,21 +17,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { I18nMessage } from '@shared/model/i18n-message';
-import { CtaNotificationComponent } from './cta-notification.component';
-import { CallAction, CtaNotificationData } from './cta-notification.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
-// CTA stands for call-to-action
-@Injectable({
-  providedIn: 'root',
-})
-export class CtaNotificationService {
-  constructor(private readonly snackBar: MatSnackBar) {}
-
-  public show(text: I18nMessage, actions: CallAction[]): void {
-    const data: CtaNotificationData = { text, actions };
-    this.snackBar.openFromComponent(CtaNotificationComponent, { data });
-  }
-}
+/**
+ * Toast message animation
+ * Slides the message and the status bar from right to left and the opposite way
+ */
+export /** @type {*} */
+const notifyAnimation = trigger('notify', [
+  state(
+    'void',
+    style({
+      opacity: 0,
+      height: 0,
+      transform: 'translateX(100%)',
+    }),
+  ),
+  state('show', style({ transform: 'translateX(5%)' })),
+  transition('void => show, show => void', [animate('0.30s')]),
+]);

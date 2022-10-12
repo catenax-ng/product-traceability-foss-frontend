@@ -17,31 +17,16 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-.notification {
-  @apply flex flex-row justify-between bg-white mb-2 w-96 h-14 z-120 border-solid border-l-8;
+import { I18nMessage } from '@shared/model/i18n-message';
+
+export interface CallAction {
+  text: I18nMessage;
+  link: string;
+  linkQueryParams?: Record<string, string>;
 }
 
-.status-bar-success {
-  height: 100%;
-  @apply border-success;
-}
-
-.status-bar-warning {
-  height: 100%;
-  @apply border-warning;
-}
-
-.status-bar-error {
-  height: 100%;
-  @apply border-error;
-}
-
-.status-bar-informative {
-  height: 100%;
-  @apply border-info;
-}
-
-.btn-close {
-  border: 0;
-  @apply bg-tundoraShadeGray border-0;
+// CTA stands for call-to-action
+export interface CtaSnackbarData {
+  text: I18nMessage;
+  actions: CallAction[];
 }

@@ -17,32 +17,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBar } from '@angular/material/snack-bar';
-import { I18nMessage } from '@shared/model/i18n-message';
-import { CallAction, CtaNotificationData } from './cta-notification.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ToastMessage } from './toast-message.model';
 
-// CTA stands for call-to-action
 @Component({
-  selector: 'cta-notification',
-  templateUrl: './cta-notification.component.html',
+  selector: 'app-toast-message',
+  templateUrl: './toast-message.component.html',
+  styleUrls: ['./toast-message.component.scss'],
 })
-export class CtaNotificationComponent {
-  public get text(): I18nMessage {
-    return this.data.text;
-  }
-
-  public get actions(): CallAction[] {
-    return this.data.actions;
-  }
-
-  constructor(
-    @Inject(MAT_SNACK_BAR_DATA)
-    private readonly data: CtaNotificationData,
-    private readonly snackBar: MatSnackBar,
-  ) {}
-
-  public onActionClick(): void {
-    this.snackBar.dismiss();
-  }
+export class ToastMessageComponent {
+  @Input() toastMessage: ToastMessage;
+  @Output() removeToast: EventEmitter<ToastMessage> = new EventEmitter<ToastMessage>();
 }

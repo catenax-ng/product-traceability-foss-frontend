@@ -17,28 +17,32 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-/**
- * Types or status of notification messages
- * Success status - shows the notification with a green status bar, typically used to inform the user
- * warning status - shows the notification with a yellow status bar, typically used to alert the user
- * error status - shows the notification with a red status bar, typically used for error messages
- * informative status - shows the notification with a blue status bar, typically used for informative messages
- */
+import { Component, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBar } from '@angular/material/snack-bar';
+import { I18nMessage } from '@shared/model/i18n-message';
+import { CallAction, CtaSnackbarData } from './cta-snackbar.model';
 
-export const enum NotificationStatus {
-  Success = 1,
-  Warning = 2,
-  Error = 3,
-  Informative = 4,
-}
+// CTA stands for call-to-action
+@Component({
+  selector: 'cta-snackbar',
+  templateUrl: './cta-snackbar.component.html',
+})
+export class CtaSnackbarComponent {
+  public get text(): I18nMessage {
+    return this.data.text;
+  }
 
-export class NotificationMessage {
-  public isSliderON = true;
+  public get actions(): CallAction[] {
+    return this.data.actions;
+  }
 
   constructor(
-    public id: number,
-    public message: string,
-    public status: NotificationStatus | null,
-    public timeout: number,
+    @Inject(MAT_SNACK_BAR_DATA)
+    private readonly data: CtaSnackbarData,
+    private readonly snackBar: MatSnackBar,
   ) {}
+
+  public onActionClick(): void {
+    this.snackBar.dismiss();
+  }
 }
