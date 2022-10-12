@@ -136,15 +136,14 @@ describe('TableComponent', () => {
       },
     );
 
-    const spy = spyOn(component.fixture.componentInstance, 'configChange');
     const nameElement = screen.getByText('Name Sort');
     nameElement.click();
 
-    expect(spy).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'asc'] });
+    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'asc'] });
     nameElement.click();
-    expect(spy).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
+    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
     nameElement.click();
-    expect(spy).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
+    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
   });
 
   it('should display menu icon', async () => {

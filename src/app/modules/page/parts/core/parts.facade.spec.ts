@@ -66,7 +66,7 @@ describe('Parts facade', () => {
       partsFacade.setMyParts(0, 10);
 
       const parts = await firstValueFrom(partsState.myParts$);
-      await waitFor(() => expect(parts).toEqual({ error: new Error('error') }));
+      await waitFor(() => expect(parts).toEqual({ data: undefined, loader: undefined, error: new Error('error') }));
     });
   });
 
