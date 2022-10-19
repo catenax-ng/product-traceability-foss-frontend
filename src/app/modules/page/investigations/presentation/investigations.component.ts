@@ -18,10 +18,11 @@
  ********************************************************************************/
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { InvestigationDetailFacade } from '@page/investigations/core/investigation-detail.facade';
+import { getInvestigationInboxRoute } from '@page/investigations/investigations-external-route';
 import { TablePaginationEventConfig } from '@shared/components/table/table.model';
-import { StaticIdService } from '@shared/service/staticId.service';
-import { map } from 'rxjs';
+import { Notification } from '@shared/model/notification.model';
 import { InvestigationsFacade } from '../core/investigations.facade';
 
 @Component({
@@ -31,18 +32,11 @@ import { InvestigationsFacade } from '../core/investigations.facade';
 export class InvestigationsComponent implements OnInit, OnDestroy {
   public readonly investigationsReceived$ = this.investigationsFacade.investigationsReceived$;
   public readonly investigationsQueuedAndRequested$ = this.investigationsFacade.investigationsQueuedAndRequested$;
-  public readonly tabIndex$ = this.route.queryParams.pipe(map(params => parseInt(params.tabIndex, 10) || 0));
-
-  public readonly receivedTabLabelId = this.staticIdService.generateId('InvestigationsComponent.receivedTabLabel');
-  public readonly queuedAndRequestedTabLabelId = this.staticIdService.generateId(
-    'InvestigationsComponent.queuedAndRequestedTabLabel',
-  );
 
   constructor(
     private readonly investigationsFacade: InvestigationsFacade,
+    private readonly investigationDetailFacade: InvestigationDetailFacade,
     private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly staticIdService: StaticIdService,
   ) {}
 
   public ngOnInit(): void {
@@ -62,7 +56,9 @@ export class InvestigationsComponent implements OnInit, OnDestroy {
     this.investigationsFacade.setQueuedAndRequestedInvestigations(pagination.page, pagination.pageSize);
   }
 
-  public onTabChange(tabIndex: number) {
-    void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });
+  public onNotificationSelected(notification: Notification): void {
+    this.investigationDetailFacade.selected = { data: notification };
+    const { link } = getInvestigationInboxRoute();
+    this.router.navigate([`/${link}/${notification.id}`]).then();
   }
 }

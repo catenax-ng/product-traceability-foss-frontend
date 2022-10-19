@@ -39,7 +39,7 @@ describe('TableComponent', () => {
 
     const tableConfig: TableConfig = { displayedColumns, header };
     return renderComponent(
-      `<app-table [data]='data' [tableConfig]='tableConfig' (selected)='selected($event)'></app-table>`,
+      `<app-table [paginationData]='data' [tableConfig]='tableConfig' (selected)='selected($event)'></app-table>`,
       {
         declarations: [TableComponent],
         imports: [SharedModule],
@@ -124,7 +124,7 @@ describe('TableComponent', () => {
 
     const configChange = jasmine.createSpy();
     const component = await renderComponent(
-      `<app-table  [data]='data' [tableConfig]='tableConfig' (configChanged)='configChange($event)'></app-table>`,
+      `<app-table  [paginationData]='data' [tableConfig]='tableConfig' (configChanged)='configChange($event)'></app-table>`,
       {
         declarations: [TableComponent],
         imports: [SharedModule],

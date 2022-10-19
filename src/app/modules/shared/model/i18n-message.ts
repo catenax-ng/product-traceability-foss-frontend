@@ -19,7 +19,7 @@
 
 export interface ParameterizedMessage {
   id: string;
-  values: Record<string, unknown>;
+  values?: Record<string, unknown>;
 }
 
 export type I18nMessage = ParameterizedMessage | string;

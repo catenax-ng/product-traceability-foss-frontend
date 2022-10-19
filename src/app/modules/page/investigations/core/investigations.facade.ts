@@ -18,7 +18,7 @@
  ********************************************************************************/
 
 import { Injectable } from '@angular/core';
-import { Investigations, InvestigationStatus } from '@shared/model/investigations.model';
+import { Notification, Notifications, NotificationStatus } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { InvestigationsService } from '@shared/service/investigations.service';
 import { Observable, Subscription } from 'rxjs';
@@ -34,18 +34,22 @@ export class InvestigationsFacade {
     private readonly investigationsState: InvestigationsState,
   ) {}
 
-  public get investigationsReceived$(): Observable<View<Investigations>> {
+  public get investigationsReceived$(): Observable<View<Notifications>> {
     return this.investigationsState.investigationsReceived$;
   }
 
-  public get investigationsQueuedAndRequested$(): Observable<View<Investigations>> {
+  public get investigationsQueuedAndRequested$(): Observable<View<Notifications>> {
     return this.investigationsState.investigationsQueuedAndRequested$;
+  }
+
+  public getInvestigation(id: string): Observable<Notification> {
+    return this.investigationsService.getInvestigation(id);
   }
 
   public setReceivedInvestigation(page = 0, pageSize = 5): void {
     this.investigationReceivedSubscription?.unsubscribe();
     this.investigationReceivedSubscription = this.investigationsService
-      .getInvestigationsByType([InvestigationStatus.RECEIVED], page, pageSize)
+      .getInvestigationsByType([NotificationStatus.RECEIVED], page, pageSize)
       .subscribe({
         next: data => (this.investigationsState.investigationsReceived = { data }),
         error: (error: Error) => (this.investigationsState.investigationsReceived = { error }),
@@ -55,7 +59,7 @@ export class InvestigationsFacade {
   public setQueuedAndRequestedInvestigations(page = 0, pageSize = 5): void {
     this.investigationQueuedAndRequestedSubscription?.unsubscribe();
     this.investigationQueuedAndRequestedSubscription = this.investigationsService
-      .getInvestigationsByType([InvestigationStatus.CREATED, InvestigationStatus.SENT], page, pageSize)
+      .getInvestigationsByType([NotificationStatus.CREATED, NotificationStatus.SENT], page, pageSize)
       .subscribe({
         next: data => (this.investigationsState.investigationsQueuedAndRequested = { data }),
         error: (error: Error) => (this.investigationsState.investigationsQueuedAndRequested = { error }),

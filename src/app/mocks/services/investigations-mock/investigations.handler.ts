@@ -18,17 +18,28 @@
  ********************************************************************************/
 
 import { environment } from '@env';
-import { InvestigationStatus } from '@shared/model/investigations.model';
+import { NotificationStatus } from '@shared/model/notification.model';
 import { rest } from 'msw';
 import { applyPagination, extractPagination } from '../pagination.helper';
 import { buildMockInvestigations, getInvestigationById, InvestigationIdPrefix } from './investigations.model';
 
 export const investigationsHandlers = [
+  rest.get(`${environment.apiUrl}/investigations/:investigationId`, (req, res, ctx) => {
+    const { investigationId } = req.params;
+
+    const indexFromId = parseInt((investigationId as string).replace('id-', ''), 10);
+
+    const statusCollection = [NotificationStatus.SENT, NotificationStatus.CREATED, NotificationStatus.RECEIVED];
+    const randomNotification = buildMockInvestigations([statusCollection[indexFromId]])[0];
+
+    return res(ctx.status(200), ctx.json({ ...randomNotification, id: investigationId }));
+  }),
+
   rest.get(`${environment.apiUrl}/investigations`, (req, res, ctx) => {
     const pagination = extractPagination(req);
     const status = req.url.searchParams.get('status') ?? '';
 
-    const currentStatus = status.split(',') as InvestigationStatus[];
+    const currentStatus = status.split(',') as NotificationStatus[];
     return res(ctx.status(200), ctx.json(applyPagination(buildMockInvestigations(currentStatus), pagination)));
   }),
 
