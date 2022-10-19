@@ -43,8 +43,8 @@ describe('D3 Tree', () => {
       _viewY: 0,
       id,
       mainElement,
-      width: 1024,
-      height: 568,
+      width: mainElement?.node?.()?.getBoundingClientRect?.()?.width,
+      height: mainElement?.node?.()?.getBoundingClientRect?.()?.height,
       r: 60,
     };
 

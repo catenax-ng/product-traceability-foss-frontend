@@ -220,6 +220,8 @@ describe('Other Parts', () => {
 
     const selectedText_2 = await waitFor(() => screen.getByText('0 Parts selected for this page.'));
     expect(selectedText_2).toBeInTheDocument();
+    // TODO: not sure if this is right way, but we already use it in different test here: 'should clear currentSelectedParts'
+    fixture.componentInstance.clearSelected();
     await waitFor(() => expect(fixture.componentInstance.currentSelectedItems).toEqual([]));
   });
 });
