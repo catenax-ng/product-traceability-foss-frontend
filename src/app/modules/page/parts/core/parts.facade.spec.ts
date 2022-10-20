@@ -17,6 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Pagination } from '@core/model/pagination.model';
 import { PartsFacade } from '@page/parts/core/parts.facade';
 import { PartsState } from '@page/parts/core/parts.state';
 import { Part } from '@page/parts/model/parts.model';
@@ -49,14 +50,18 @@ describe('Parts facade', () => {
 
   describe('setParts', () => {
     it('should set parts if request is successful', async () => {
-      const serviceSpy = spyOn(partsServiceMok, 'getMyParts');
+      const serviceSpy = spyOn(partsServiceMok, 'getMyParts').and.returnValue(
+        of<Pagination<Part>>(PartsAssembler.assembleParts(mockAssets)),
+      );
       partsFacade.setMyParts(0, 10);
 
       await waitFor(() => expect(serviceSpy).toHaveBeenCalledTimes(1));
       await waitFor(() => expect(serviceSpy).toHaveBeenCalledWith(0, 10, null));
 
       const parts = await firstValueFrom(partsState.myParts$);
-      await waitFor(() => expect(parts).toEqual({ data: PartsAssembler.assembleParts(mockAssets) }));
+      await waitFor(() =>
+        expect(parts).toEqual({ error: undefined, loader: undefined, data: PartsAssembler.assembleParts(mockAssets) }),
+      );
     });
 
     it('should not set parts if request fails', async () => {

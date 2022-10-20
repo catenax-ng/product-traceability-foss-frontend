@@ -28,6 +28,7 @@ import { SharedModule } from '@shared/shared.module';
 import { screen, waitFor } from '@testing-library/angular';
 import { server } from '@tests/mock-test-server';
 import { renderComponent } from '@tests/test-render.utils';
+import { of } from 'rxjs';
 
 describe('requestInvestigationComponent', () => {
   beforeAll(() => server.start());
@@ -104,7 +105,7 @@ describe('requestInvestigationComponent', () => {
     const { componentInstance } = fixture;
 
     const spy = spyOn(componentInstance.clearSelected, 'emit');
-    const spy_2 = spyOn((componentInstance as any).investigationsService, 'postInvestigation');
+    const spy_2 = spyOn((componentInstance as any).investigationsService, 'postInvestigation').and.returnValue(of([]));
 
     const testText = 'This is for a testing purpose.';
 

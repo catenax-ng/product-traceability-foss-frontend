@@ -60,7 +60,8 @@ describe('D3 Tree', () => {
   });
 
   it('should render modified text for different sizes', () => {
-    new Tree(treeData);
+    const tree = new Tree(treeData);
+    tree.renderTree(D3TreeDummyData).node();
 
     expect(screen.getByText('Small')).toBeInTheDocument();
     expect(screen.getByText('Long text...')).toBeInTheDocument();

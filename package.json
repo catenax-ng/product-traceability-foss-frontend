@@ -19,7 +19,7 @@
     "start:auth:local": "ng serve --configuration=authLocal",
     "env:mock": "docker-compose up",
     "test": "ng test",
-    "test:ci": "ng test --coverage",
+    "test:ci": "ng test --code-coverage",
     "add-license-header": "node ./scripts/add-license-header.js --src=src",
     "dependencies:download-tool": "mkdir -p ./scripts/download && curl -L --output ./scripts/download/org.eclipse.dash.licenses.jar 'https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=LATEST'",
     "dependencies:generate": "java -jar ./scripts/download/org.eclipse.dash.licenses.jar yarn.lock -project automotive.tractusx -summary DEPENDENCIES",
