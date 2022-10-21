@@ -81,8 +81,8 @@ describe('ScrollWithShadowComponent', () => {
   it('should remove scroll shadow if resized to no scroll', async () => {
     const { fixture } = await renderScrollWithShadow({ withScroll: true });
     screen.getByTestId('scrollable-element').style.width = '100px';
-
-    fixture.detectChanges();
+    fireEvent.scroll(screen.getByTestId('scroll-container'));
+    fixture.detectChanges(true);
 
     await waitFor(() =>
       expect(screen.getByTestId('scroll-container')).not.toHaveClass('scroll-container__right-scroll'),
