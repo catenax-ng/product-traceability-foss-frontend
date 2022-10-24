@@ -63,15 +63,14 @@ const buildAddComment =
         throw new Error(`Cannot check invalid comment, there is no "${closeComment}" close comment`);
       }
 
-      // TODO: need to rethink if this is the best way to implement this feature
-      // const maybeLicense = trimLicense(
-      //   content.substring(firstHtmlCommentStarts + openComment().length, firstHtmlCommentsEnd),
-      // );
+      const maybeLicense = trimLicense(
+        content.substring(firstHtmlCommentStarts + openComment().length, firstHtmlCommentsEnd),
+      );
 
-      // if (maybeLicense !== licenseHeader) {
-      //   const endOfLicenseHeader = content.indexOf('\n', firstHtmlCommentsEnd);
-      //   return prependNewLicenseComment(content.substring(endOfLicenseHeader + 2));
-      // }
+      if (maybeLicense !== licenseHeader) {
+        const endOfLicenseHeader = content.indexOf('\n', firstHtmlCommentsEnd);
+        return prependNewLicenseComment(content.substring(endOfLicenseHeader + 2));
+      }
     }
 
     return content;

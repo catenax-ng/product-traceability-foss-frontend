@@ -79,9 +79,8 @@ describe('Parts', () => {
 
     const sideNavElement = await waitFor(() => screen.getByTestId('sidenav--test-id'));
     expect(sideNavElement).toBeInTheDocument();
-    // TODO: not sure why this line below doesn't work
-    // await waitFor(() => expect(sideNavElement).toHaveClass('sidenav--container__open'));
     await waitFor(() => expect(screen.getByText('Request quality investigation')).toBeInTheDocument());
+    await waitFor(() => expect(sideNavElement).toHaveClass('sidenav--container__open'));
     await waitFor(() => expect(screen.getByText(MOCK_part_1.id)).toBeInTheDocument());
     expect(screen.getAllByText(MOCK_part_1.id).length).toBe(1);
   });
