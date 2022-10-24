@@ -30,7 +30,27 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'sonarqube'],
+    sonarqubeReporter: {
+      basePath: 'src', // test files folder
+      filePattern: '**/*spec.ts', // test files glob pattern
+      encoding: 'utf-8', // test files encoding
+      outputFolder: 'test-results', // report destination
+      legacyMode: false, // report for Sonarqube < 6.2 (disabled)
+      reportName: metadata => {
+        // report name callback, but accepts also a
+        // string (file name) to generate a single file
+        /**
+         * Report metadata array:
+         * - metadata[0] = browser name
+         * - metadata[1] = browser version
+         * - metadata[2] = plataform name
+         * - metadata[3] = plataform version
+         */
+        // return metadata.concat('xml').join('.');
+        return metadata[0].concat('.xml'); // we want to use only browser name in output e.g. chrome.xml
+      },
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

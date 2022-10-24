@@ -1,15 +1,12 @@
 # STAGE 1: Build
-FROM node:alpine as builder
+FROM node:18-alpine as builder
+
 # Copy dependencies info
 COPY /package.json /yarn.lock ./
 
 # Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 RUN yarn install && mkdir /ng-app && mv ./node_modules ./ng-app
 
-# Install Google Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-RUN apt-get update && apt-get install -y google-chrome-stable
 
 # Set workdir and copy
 WORKDIR /ng-app
