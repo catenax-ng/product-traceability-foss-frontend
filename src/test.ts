@@ -19,12 +19,12 @@
 
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-import 'zone.js/dist/zone';
-import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 // @ts-ignore
 import JasmineDOM from '@testing-library/jasmine-dom';
+import 'zone.js/dist/zone';
+import 'zone.js/testing';
 
 beforeAll(() => {
   jasmine.addMatchers(JasmineDOM);

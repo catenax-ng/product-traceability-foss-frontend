@@ -19,8 +19,8 @@
 
 import { TreeData } from '@shared/modules/relations/model/relations.model';
 import { TreeSvg } from '@shared/modules/relations/presentation/model.d3';
-import * as d3 from 'd3';
 import { screen } from '@testing-library/angular';
+import * as d3 from 'd3';
 import Tree from './tree.d3';
 import { D3TreeDummyData } from './tree.d3.test.data';
 
