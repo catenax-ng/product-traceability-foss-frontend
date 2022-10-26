@@ -7,7 +7,6 @@ COPY /package.json /yarn.lock ./
 # Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 RUN yarn install && mkdir /ng-app && mv ./node_modules ./ng-app
 
-
 # Set workdir and copy
 WORKDIR /ng-app
 COPY ./ .

@@ -1278,8 +1278,8 @@ npm/npmjs/@swc/core/1.2.177, Apache-2.0, approved, clearlydefined
 npm/npmjs/@testing-library/angular/11.0.4, MIT, approved, clearlydefined
 npm/npmjs/@testing-library/dom/8.13.0, MIT, approved, #3002
 npm/npmjs/@testing-library/jasmine-dom/1.2.0, MIT, approved, clearlydefined
-npm/npmjs/@tootallnate/once/1.1.2, MIT, approved, clearlydefined
-npm/npmjs/@tootallnate/once/2.0.0, MIT, approved, clearlydefined
+npm/npmjs/@tootallnate/once/1.1.2, EPL-2.0, approved, iot.diafanis
+npm/npmjs/@tootallnate/once/2.0.0, EPL-2.0, approved, iot.diafanis
 npm/npmjs/@tsconfig/node10/1.0.8, MIT, approved, clearlydefined
 npm/npmjs/@tsconfig/node12/1.0.9, MIT, approved, clearlydefined
 npm/npmjs/@tsconfig/node14/1.0.1, MIT, approved, clearlydefined
@@ -1339,7 +1339,7 @@ npm/npmjs/@types/json-schema/7.0.11, MIT, approved, clearlydefined
 npm/npmjs/@types/json5/0.0.29, MIT, approved, clearlydefined
 npm/npmjs/@types/karma/6.3.3, MIT, approved, clearlydefined
 npm/npmjs/@types/lodash-es/4.17.6, MIT, approved, clearlydefined
-npm/npmjs/@types/lodash/4.14.182, MIT, approved, clearlydefined
+npm/npmjs/@types/lodash/4.14.182, MIT, approved, #4131
 npm/npmjs/@types/luxon/2.3.2, MIT, approved, clearlydefined
 npm/npmjs/@types/mapbox__point-geometry/0.1.2, MIT, approved, clearlydefined
 npm/npmjs/@types/mapbox__vector-tile/1.3.0, MIT, approved, clearlydefined
