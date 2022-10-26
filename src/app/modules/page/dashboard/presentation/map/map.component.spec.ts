@@ -21,19 +21,6 @@ import { DashboardModule } from '@page/dashboard/dashboard.module';
 import { MapComponent } from '@page/dashboard/presentation/map/map.component';
 import { renderComponent } from '@tests/test-render.utils';
 
-// jasmine.createSpy('maplibre-gl/dist/maplibre-gl', () => ({
-//   GeolocateControl: jasmine.createSpy(),
-//   Map: jasmine.createSpyObj(() => ({
-//     addControl: jasmine.createSpy(),
-//     on: jasmine.createSpy(),
-//     remove: jasmine.createSpy(),
-//     resize: jasmine.createSpy(),
-//     getLayer: jasmine.createSpy(),
-//     addLayer: jasmine.createSpy(),
-//   })),
-//   NavigationControl: jasmine.createSpy(),
-// }));
-
 describe('Map', () => {
   const renderMap = mapData =>
     renderComponent(MapComponent, {
