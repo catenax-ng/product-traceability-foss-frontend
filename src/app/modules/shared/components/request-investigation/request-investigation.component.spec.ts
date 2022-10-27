@@ -106,6 +106,9 @@ describe('requestInvestigationComponent', () => {
 
     const spy = spyOn(componentInstance.clearSelected, 'emit');
     const spy_2 = spyOn((componentInstance as any).investigationsService, 'postInvestigation').and.returnValue(of([]));
+    const spy_3 = spyOn((componentInstance as any).otherPartsFacade, 'setActiveInvestigationForParts').and.returnValue(
+      of([]),
+    );
 
     const testText = 'This is for a testing purpose.';
 
@@ -115,5 +118,6 @@ describe('requestInvestigationComponent', () => {
 
     await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
     expect(spy_2).toHaveBeenCalledWith(['id_1'], testText);
+    await waitFor(() => expect(spy_3).toHaveBeenCalledTimes(1));
   });
 });
