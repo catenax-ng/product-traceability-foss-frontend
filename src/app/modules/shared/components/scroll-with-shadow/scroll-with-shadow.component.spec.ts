@@ -38,7 +38,7 @@ describe('ScrollWithShadowComponent', () => {
     );
 
     const scrollWithShadowDebugElement = result.fixture.debugElement.query(By.directive(ScrollWithShadowComponent));
-    await scrollWithShadowDebugElement.componentInstance.whenReady;
+    await scrollWithShadowDebugElement.componentInstance.whenMarkedAsReady;
     result.detectChanges();
 
     return result;

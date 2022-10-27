@@ -27,7 +27,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@ang
 export class ScrollWithShadowComponent implements AfterViewInit, OnDestroy {
   @ViewChild('container') public containerRef: ElementRef<HTMLDivElement>;
 
-  public whenReady = new Promise(resolve => {
+  public whenMarkedAsReady = new Promise(resolve => {
     this.markAsReady = resolve as () => void;
   });
 

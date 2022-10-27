@@ -91,33 +91,30 @@ describe('Other Parts', () => {
 
   it('should set currentSelectedParts correctly', async () => {
     const renderedComponent = await renderOtherParts();
-    const expected = ['test', 'test2'];
+    const expected = ['test', 'test2'] as unknown as Part[];
 
     renderedComponent.fixture.componentInstance.onMultiSelect(expected);
-    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected] as unknown as Part[][]);
+    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected]);
 
     renderedComponent.fixture.componentInstance.onTabChange({ index: 1 } as any);
     renderedComponent.fixture.componentInstance.onMultiSelect(expected);
-    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([
-      expected,
-      expected,
-    ] as unknown as Part[][]);
+    expect(renderedComponent.fixture.componentInstance.selectedItems).toEqual([expected, expected]);
   });
 
   it('should clear currentSelectedParts', async () => {
     const { fixture } = await renderOtherParts();
     const { componentInstance } = fixture;
 
-    const expected = ['test', 'test2'];
+    const expected = ['test', 'test2'] as unknown as Part[];
 
     componentInstance.onMultiSelect(expected);
     componentInstance.onTabChange({ index: 1 } as any);
     componentInstance.onMultiSelect(expected);
-    expect(componentInstance.selectedItems).toEqual([expected, expected] as unknown as Part[][]);
+    expect(componentInstance.selectedItems).toEqual([expected, expected]);
 
     componentInstance.onTabChange({ index: 0 } as any);
     componentInstance.clearSelected();
-    expect(componentInstance.selectedItems).toEqual([[], expected] as unknown as Part[][]);
+    expect(componentInstance.selectedItems).toEqual([[], expected]);
   });
 
   it('should remove only one item from current selection', async () => {
