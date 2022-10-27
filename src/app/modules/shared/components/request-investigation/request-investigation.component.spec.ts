@@ -52,7 +52,7 @@ describe('requestInvestigationComponent', () => {
       {
         declarations: [SidenavComponent, RequestInvestigationComponent],
         providers: [{ provide: SidenavService }],
-        imports: [SharedModule, LayoutModule],
+        imports: [SharedModule, LayoutModule, OtherPartsModule],
         translations: ['page.otherParts'],
         componentProperties: {
           deselectPartMock,
