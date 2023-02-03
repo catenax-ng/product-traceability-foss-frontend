@@ -1,3 +1,6 @@
+# This repository is deprecated and will be archived
+We moved [here](https://github.com/eclipse-tractusx/traceability-foss-frontend) and the actual development takes place [here](https://github.com/catenax-ng/tx-traceability-foss-frontend)
+
 <div style="display: flex; align-items: center;justify-content: center;align-content: center;">
    <img src="src/assets/images/logo.svg" alt="Trace-X - Product Traceability FOSS Frontend (TRACE-FOSS)" style="width:200px;"/>
    <h1 style="margin: 10px 0 0 10px">Traceability FOSS Frontend</h1>
